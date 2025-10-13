@@ -971,16 +971,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // 按钮悬停效果
-  copyButton.addEventListener('mouseenter', function() {
-    this.style.background = '#8B5CF6';
-  });
-  
-  copyButton.addEventListener('mouseleave', function() {
-    if (this.style.background !== '#059652') {
-      this.style.background = '#6B46C1';
-    }
-  });
+// 悬停效果
+copyButton.addEventListener('mouseenter', function() {
+  this.style.background = '#1a3f6b'; // 更深的蓝色作为悬停效果
+});
+
+copyButton.addEventListener('mouseleave', function() {
+  if (this.style.background !== '#059652') { // 保持复制成功时的绿色
+    this.style.background = '#215088'; // 回到原始深蓝色
+  }
+});
 });
 </script>
 
