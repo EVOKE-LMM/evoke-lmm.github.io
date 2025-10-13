@@ -904,15 +904,98 @@
       <h2>BibTeX</h2>
     </div>
   <!-- 新增 BibTeX 栏目 -->
-  <div class="team-bibtex" style="max-width: 950px; margin: 32px auto 0 auto; background: #f8f9fa; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 32px;">
-    <pre style="font-size: 15px; color: #333; background: none; border: none; margin: 0; padding: 0; font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace; white-space: pre-wrap; word-break: break-all;">
-@article{jiang2025evoke,
+
+
+
+<div class="team-bibtex" style="max-width: 950px; margin: 32px auto 50px auto; background: #f8f9fa; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 20px; position: relative;">
+  <!-- Copy按钮 -->
+  <button id="copy-bibtex" style="position: absolute; top: 15px; right: 15px; background: #6B46C1; color: white; border: 1px solid #8B5CF6; border-radius: 6px; padding: 8px 12px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: background-color 0.3s;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="m5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+    Copy
+  </button>
+  
+  <!-- 代码容器 -->
+  <div style="background: white; border-radius: 6px; padding: 20px; margin-top: 40px; overflow-x: auto; border: 1px solid #e5e7eb;">
+    <pre id="bibtex-content" style="font-size: 14px; color: #333; background: none; border: none; margin: 0; padding: 0; font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace; white-space: pre; word-break: normal; min-width: max-content;">@article{jiang2025evoke,
   title = {When Large Multimodal Models Confront Evolving Knowledge:Challenges and Pathways},
   author = {Kailin Jiang and Yuntao Du and Yukai Ding and Yuchen Ren and Ning Jiang and Zhi Gao and Zilong Zheng and Lei Liu and Bin Li and Qing Li},
   year = {2025}
 }
-    </pre>
+}</pre>
   </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const copyButton = document.getElementById('copy-bibtex');
+  const bibtexContent = document.getElementById('bibtex-content');
+  
+  copyButton.addEventListener('click', async function() {
+    try {
+      await navigator.clipboard.writeText(bibtexContent.textContent);
+      
+      // 临时改变按钮文本和样式
+      const originalText = copyButton.innerHTML;
+      copyButton.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>Copied!';
+      copyButton.style.background = '#059652';
+      
+      // 2秒后恢复原状
+      setTimeout(() => {
+        copyButton.innerHTML = originalText;
+        copyButton.style.background = '#6B46C1';
+      }, 2000);
+      
+    } catch (err) {
+      console.error('复制失败:', err);
+      // 降级方案：选中文本
+      const range = document.createRange();
+      range.selectNode(bibtexContent);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      
+      try {
+        document.execCommand('copy');
+        copyButton.innerHTML = 'Copied!';
+        setTimeout(() => {
+          copyButton.innerHTML = 'Copy';
+        }, 2000);
+      } catch (fallbackErr) {
+        alert('复制失败，请手动选择文本复制');
+      }
+    }
+  });
+  
+  // 按钮悬停效果
+  copyButton.addEventListener('mouseenter', function() {
+    this.style.background = '#8B5CF6';
+  });
+  
+  copyButton.addEventListener('mouseleave', function() {
+    if (this.style.background !== '#059652') {
+      this.style.background = '#6B46C1';
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
 
     <!-- booktitle={The Thirteenth International Conference on Learning Representations}, -->
 
